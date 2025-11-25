@@ -915,26 +915,37 @@ int main(int argc, char **argv) {
             /* Get the current time for the "You have nyaned..." string */
             time(&current);
             double diff = difftime(current, start);
-            /* Now count the length of the time difference so we can center */
-            int nLen = digits((int)diff);
+
+            /* Convert the time to an int to then get a HH:MM:SS format */
+            int total = (int)diff;
+            int h = total / 3600;
+            int m = (total % 3600) / 60;
+            int s = total % 60;
+
+            /* Now count the length of the time difference so we can center -- Always 8 with new
+             * time
+             */
+            int nLen = 8;
             /*
              * 29 = the length of the rest of the string;
              * XXX: Replace this was actually checking the written bytes from a
              * call to sprintf or something
              */
-            int width = (terminal_width - 29 - nLen) / 2;
+            int width = (terminal_width - 21 - nLen) / 2;
+
             /* Spit out some spaces so that we're actually centered */
             while (width > 0) {
                 printf(" ");
                 width--;
             }
+
             /* You have nyaned for [n] seconds!
              * The \033[J ensures that the rest of the line has the dark blue
              * background, and the \033[1;37m ensures that our text is bright white.
              * The \033[0m prevents the Apple ][ from flipping everything, but
              * makes the whole nyancat less bright on the vt220
              */
-            printf("\033[1;37mYou have nyaned for %0.0f seconds!\033[J\033[0m", diff);
+            printf("\033[1;37mYou have nyaned for %02d:%02d:%02d!\033[J\033[0m", h, m, s);
         }
         /* Reset the last color so that the escape sequences rewrite */
         last = 0;

@@ -332,7 +332,6 @@ void send_command(int cmd, int opt) {
 /*
  * Print the usage / help text describing options
  */
-<<<<<<< HEAD
 void usage(char *argv[]) {
     printf("Terminal Nyancat\n"
            "\n"
@@ -457,7 +456,6 @@ int main(int argc, char **argv) {
             break;
         }
     }
->>>>>>> add-transparent-mode
 
     if (telnet) {
         /* Telnet mode */
